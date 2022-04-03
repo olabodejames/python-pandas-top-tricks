@@ -13,3 +13,34 @@ data_2 = data.loc[(data['Education'] == 'Not Graduate') & (data['ApplicantIncome
 
 print('\n\nFiltered Data\n\n')
 print(data_2[['Education', 'ApplicantIncome']].head())
+
+#Trick 2 - Binning of Data
+# There are many variable types in python, you have continuous, discreet or categorical - many times, for purpose of meaningful analysis - it will be necessary to convert between variable types
+# For instance creating age groups - Todlers, Pre-teens, Teens, Young Adults, Adults and so on from a list of supplied age ranges
+
+#For instance, you have a continuous variable in your data – age. But you require an age group for your analysis such as – child, teenager, adult, senior citizen. Indeed, Binning is perfect to solve our problem here.
+
+#To perform binning, we use the cut() function. This useful for going from a continuous variable to a categorical variable.
+
+import pandas as pd
+
+df = pd.read_csv('titanic.csv')
+from sklearn.utils import shuffle
+
+# Shuffling the Dataset
+df = shuffle(df, random_state = 42)
+
+df.head()
+
+bins = [0,4,17,65,99]
+labels =['Toddler','Child','Adult','Elderly']
+
+category = pd.cut(df['Age'], bins = bins, labels = labels)
+
+df.insert(2, 'Age Group', category)
+
+df.head()
+
+df['Age Group'].value_counts()
+
+df.isnull().sum()
