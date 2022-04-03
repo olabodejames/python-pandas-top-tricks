@@ -44,3 +44,59 @@ df.head()
 df['Age Group'].value_counts()
 
 df.isnull().sum()
+
+
+#Trick 3 - GroupBy
+#Pandas provide an essential function to perform grouping of data which is Groupby.
+#The Groupby operation involves the splitting of an object based on certain conditions, applying a function, and then combining the results.
+
+#Groupby is one of the most frequent ops performed on data in data science
+
+### Trick 3 - GroupBy
+
+# Average Income of males and females
+df3 = df2.groupby(['Gender'])[['ApplicantIncome']].mean()
+print(df3.head(10))
+
+# Average loan amount for different property areas like urban, rural
+df4 = df2.groupby(['Property_Area'])[['LoanAmount']].mean()
+print(df4.head())
+
+# Compare loan status of different education backgrounds
+df5 = df2.groupby(['Education'])[['Loan_Status']].count()
+print(df5.head(10))
+
+#Trick 4 - map - data substitution
+#sample data
+data = {'name': ['A', 'B', 'C', 'D', 'E'], 
+        'age': [22, 26, 33, 44, 50],
+        'profession' : ['data engineer', 'data scientist', 'entrepreneur', 'business analyst', 'self-employed'], 
+        'city': ['Gurgaon', 'Bangalore', 'Gurgaon', 'Pune', 'New Delhi']}
+
+df6 = pd.DataFrame(data)
+print(df6.head())
+
+# dictionary to map city with states
+map_city_to_states = { 'Gurgaon' : 'Haryana', 
+                  'Bangalore' : 'Karnataka', 
+                  'Pune' : 'Maharashtra', 
+                  'New Delhi' : 'Delhi'}
+
+# apply pandas map to map the city columns with states
+df6['state'] = df6['city'].map(map_city_to_states)
+print(df6.head())
+
+#Trick 5 - Styling The Dataframe
+# Sometimes we just like to add visual perspective to our work
+
+data = pd.read_excel("../data/salesman_performance.xlsx")
+data
+
+data.style
+
+def highlight_green(sales):
+    color = 'green' if sales > 80 else 'black'
+    return 'color: %s' % color
+
+formatting = data.iloc[:,1:6].style.applymap(highlight_green)
+formatting
