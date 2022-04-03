@@ -1,0 +1,15 @@
+#Trick 1 - Conditional Selection of Rows
+
+# The conditional selection of rows can be based on a single condition or multiple conditions in a single statement separated by logical operators.
+
+import pandas as pd
+
+data = pd.read_csv('loan_train.csv')
+print(data[['Education', 'ApplicantIncome']].head())
+
+print('\n\nConditional Selection of Rows\n\n')
+
+data_2 = data.loc[(data['Education'] == 'Not Graduate') & (data['ApplicantIncome'] <= 5400)]
+
+print('\n\nFiltered Data\n\n')
+print(data_2[['Education', 'ApplicantIncome']].head())
